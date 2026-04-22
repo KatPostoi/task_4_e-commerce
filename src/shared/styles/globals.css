@@ -1,0 +1,30 @@
+body {
+  color: var(--color-ink);
+  background:
+    radial-gradient(circle at top left, rgba(255, 234, 207, 0.92), transparent 28%),
+    radial-gradient(circle at 90% 12%, rgba(239, 194, 148, 0.42), transparent 24%),
+    linear-gradient(180deg, #fcf6ef 0%, #efe1d0 100%);
+  font-family: var(--font-family-sans);
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.18), transparent 75%);
+  opacity: 0.35;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background-color: rgba(216, 108, 25, 0.22);
+}
