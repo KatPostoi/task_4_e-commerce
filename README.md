@@ -1,6 +1,6 @@
 # Baguette Basket
 
-Frontend-only MVP багетной мастерской на `React + TypeScript + Vite`, собранный на основе визуального референса `baguette_workshop_site/website`, но с упрощённой локальной логикой.
+Frontend-only MVP багетной мастерской на `React + TypeScript + Vite`. Время на выполнение задания 20 часов. Для выполнения работы была использованна нейросеть Open AI Codex, Perplexity AI.
 
 ## Что реализовано
 
@@ -22,7 +22,7 @@ Frontend-only MVP багетной мастерской на `React + TypeScript
 
 ## Локальные промокоды
 
-Поддерживаются фиксированные коды:
+Поддерживаются фиксированные коды (промокоды):
 
 - `ZIMA10`
 - `VESNA20`
