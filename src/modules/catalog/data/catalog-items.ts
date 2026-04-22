@@ -1,141 +1,255 @@
 import type { CatalogItem } from '../model/catalog-types';
-import { materialById } from './materials';
-import { styleById } from './styles';
 import catalogImage21 from '../../../shared/assets/images/catalog/2.1.png';
 import catalogImage22 from '../../../shared/assets/images/catalog/2.2.png';
 import catalogImage23 from '../../../shared/assets/images/catalog/2.3.png';
 import catalogImage24 from '../../../shared/assets/images/catalog/2.4.png';
 import catalogImage25 from '../../../shared/assets/images/catalog/2.5.png';
 import catalogImage26 from '../../../shared/assets/images/catalog/2.6.png';
+import catalogImage27 from '../../../shared/assets/images/catalog/2.7.png';
+import catalogImage28 from '../../../shared/assets/images/catalog/2.8.png';
+import catalogImage29 from '../../../shared/assets/images/catalog/2.9.png';
+import catalogImage210 from '../../../shared/assets/images/catalog/2.10.png';
+import catalogImage211 from '../../../shared/assets/images/catalog/2.11.png';
+import catalogImage212 from '../../../shared/assets/images/catalog/2.12.png';
+import { materialById } from './materials';
+import { styleById } from './styles';
 
-const calculateCatalogPrice = (
-  widthCm: number,
-  heightCm: number,
-  materialId: string,
-  styleId: string | null,
-) => {
-  const material = materialById.get(materialId);
-  const style = styleId ? styleById.get(styleId) : null;
-
-  if (!material) {
-    return 0;
-  }
-
-  return Math.round(
-    (widthCm + heightCm) * material.pricePerCm * (style?.coefficient ?? 1),
-  );
+type CatalogSeedItem = Omit<CatalogItem, 'material' | 'style' | 'source'> & {
+  materialId: number;
+  styleId: string | null;
 };
 
-export const catalogItems: CatalogItem[] = [
+const catalogItemsSeed: CatalogSeedItem[] = [
   {
-    id: 'frame-rhythm',
-    slug: 'frame-rhythm',
-    title: 'Rhythm 30×40',
-    description:
-      'Лёгкая дубовая рамка для постеров и графики, когда нужен спокойный акцент без лишней тяжести.',
-    source: 'default',
-    colorLabel: 'тёплый дуб',
-    size: { widthCm: 30, heightCm: 40 },
-    price: calculateCatalogPrice(30, 40, 'oak-natural', 'minimal'),
-    stock: 8,
+    id: 'frame-1',
+    slug: 'baguette-1',
+    title: 'Деревянный багет',
+    description: '6144 руб./м.п',
+    colorLabel: 'Коричневый',
+    size: { widthCm: 25, heightCm: 25 },
+    price: 6144,
+    stock: 1,
     image: {
       src: catalogImage21,
-      alt: 'Rhythm 30×40',
+      alt: 'goodsFrame',
     },
-    materialId: 'oak-natural',
-    styleId: 'minimal',
+    materialId: 1,
+    styleId: 'minimalism',
   },
   {
-    id: 'frame-cabinet',
-    slug: 'frame-cabinet',
-    title: 'Cabinet 40×50',
-    description:
-      'Более плотная рама в копчёном орехе для фото, принтов и типографики в камерных интерьерах.',
-    source: 'default',
-    colorLabel: 'тёмный орех',
-    size: { widthCm: 40, heightCm: 50 },
-    price: calculateCatalogPrice(40, 50, 'walnut-smoked', 'classic'),
-    stock: 4,
+    id: 'frame-2',
+    slug: 'baguette-2',
+    title: 'Деревянный багет',
+    description: '11700 руб./м.п',
+    colorLabel: 'Золотой',
+    size: { widthCm: 25, heightCm: 25 },
+    price: 11700,
+    stock: 1,
     image: {
       src: catalogImage22,
-      alt: 'Cabinet 40×50',
+      alt: 'goodsFrame',
     },
-    materialId: 'walnut-smoked',
-    styleId: 'classic',
+    materialId: 1,
+    styleId: 'baroque',
   },
   {
-    id: 'frame-studio',
-    slug: 'frame-studio',
-    title: 'Studio 50×70',
-    description:
-      'Галерейный формат для постеров среднего размера и серийных композиций на одной стене.',
-    source: 'default',
-    colorLabel: 'светлый ясень',
-    size: { widthCm: 50, heightCm: 70 },
-    price: calculateCatalogPrice(50, 70, 'ash-ivory', 'gallery'),
-    stock: 6,
+    id: 'frame-3',
+    slug: 'baguette-3',
+    title: 'Деревянный багет',
+    description: '11250 руб./м.п',
+    colorLabel: 'Бронзовый',
+    size: { widthCm: 25, heightCm: 25 },
+    price: 11250,
+    stock: 1,
     image: {
       src: catalogImage23,
-      alt: 'Studio 50×70',
+      alt: 'goodsFrame',
     },
-    materialId: 'ash-ivory',
-    styleId: 'gallery',
+    materialId: 1,
+    styleId: 'rococo',
   },
   {
-    id: 'frame-noir',
-    slug: 'frame-noir',
-    title: 'Noir 30×30',
-    description:
-      'Квадратная чёрная рамка для обложек, небольших арт-принтов и контрастных типографических серий.',
-    source: 'default',
-    colorLabel: 'матовый графит',
-    size: { widthCm: 30, heightCm: 30 },
-    price: calculateCatalogPrice(30, 30, 'aluminum-black', 'gallery'),
-    stock: 10,
+    id: 'frame-4',
+    slug: 'baguette-4',
+    title: 'Деревянный багет',
+    description: '2300 руб./м.п',
+    colorLabel: 'Коричневый',
+    size: { widthCm: 25, heightCm: 25 },
+    price: 2300,
+    stock: 1,
     image: {
       src: catalogImage24,
-      alt: 'Noir 30×30',
+      alt: 'goodsFrame',
     },
-    materialId: 'aluminum-black',
-    styleId: 'gallery',
+    materialId: 1,
+    styleId: 'classicism',
   },
   {
-    id: 'frame-museum',
-    slug: 'frame-museum',
-    title: 'Museum 60×80',
-    description:
-      'Крупный формат с декоративным характером, когда рама должна стать полноправной частью композиции.',
-    source: 'default',
-    colorLabel: 'ореховый винтаж',
-    size: { widthCm: 60, heightCm: 80 },
-    price: calculateCatalogPrice(60, 80, 'walnut-smoked', 'vintage'),
-    stock: 2,
+    id: 'frame-5',
+    slug: 'baguette-5',
+    title: 'Пластиковый багет',
+    description: '2865 руб./м.п',
+    colorLabel: 'Черный',
+    size: { widthCm: 25, heightCm: 25 },
+    price: 2865,
+    stock: 1,
     image: {
       src: catalogImage25,
-      alt: 'Museum 60×80',
+      alt: 'goodsFrame',
     },
-    materialId: 'walnut-smoked',
-    styleId: 'vintage',
+    materialId: 2,
+    styleId: 'minimalism',
   },
   {
-    id: 'frame-lightline',
-    slug: 'frame-lightline',
-    title: 'Lightline 21×30',
-    description:
-      'Самый лёгкий стартовый формат для открыток, небольших иллюстраций и серий на полке.',
-    source: 'default',
-    colorLabel: 'светлый нейтральный',
-    size: { widthCm: 21, heightCm: 30 },
-    price: calculateCatalogPrice(21, 30, 'ash-ivory', 'minimal'),
-    stock: 12,
+    id: 'frame-6',
+    slug: 'baguette-6',
+    title: 'Пластиковый багет',
+    description: '1350 руб./м.п',
+    colorLabel: 'Черно-золотой',
+    size: { widthCm: 25, heightCm: 25 },
+    price: 1350,
+    stock: 1,
     image: {
       src: catalogImage26,
-      alt: 'Lightline 21×30',
+      alt: 'goodsFrame',
     },
-    materialId: 'ash-ivory',
-    styleId: 'minimal',
+    materialId: 2,
+    styleId: 'art-deco',
+  },
+  {
+    id: 'frame-7',
+    slug: 'baguette-7',
+    title: 'Пластиковый багет',
+    description: '2675 руб./м.п',
+    colorLabel: 'Молочный',
+    size: { widthCm: 25, heightCm: 25 },
+    price: 2675,
+    stock: 1,
+    image: {
+      src: catalogImage27,
+      alt: 'goodsFrame',
+    },
+    materialId: 2,
+    styleId: 'minimalism',
+  },
+  {
+    id: 'frame-8',
+    slug: 'baguette-8',
+    title: 'Пластиковый багет',
+    description: '2675 руб./м.п',
+    colorLabel: 'Коричневый',
+    size: { widthCm: 25, heightCm: 25 },
+    price: 2675,
+    stock: 1,
+    image: {
+      src: catalogImage28,
+      alt: 'goodsFrame',
+    },
+    materialId: 2,
+    styleId: 'minimalism',
+  },
+  {
+    id: 'frame-9',
+    slug: 'baguette-9',
+    title: 'Деревянный багет',
+    description: '2800 руб./м.п',
+    colorLabel: 'Розовый',
+    size: { widthCm: 25, heightCm: 25 },
+    price: 2800,
+    stock: 1,
+    image: {
+      src: catalogImage29,
+      alt: 'goodsFrame',
+    },
+    materialId: 1,
+    styleId: 'minimalism',
+  },
+  {
+    id: 'frame-10',
+    slug: 'baguette-10',
+    title: 'Алюминиевый багет',
+    description: '2800 руб./м.п',
+    colorLabel: 'Белый',
+    size: { widthCm: 25, heightCm: 25 },
+    price: 2800,
+    stock: 1,
+    image: {
+      src: catalogImage210,
+      alt: 'goodsFrame',
+    },
+    materialId: 4,
+    styleId: 'minimalism',
+  },
+  {
+    id: 'frame-11',
+    slug: 'baguette-11',
+    title: 'Алюминиевый багет',
+    description: '1200 руб./м.п',
+    colorLabel: 'Коричневый',
+    size: { widthCm: 25, heightCm: 25 },
+    price: 1200,
+    stock: 1,
+    image: {
+      src: catalogImage211,
+      alt: 'goodsFrame',
+    },
+    materialId: 4,
+    styleId: 'minimalism',
+  },
+  {
+    id: 'frame-12',
+    slug: 'baguette-12',
+    title: 'Алюминиевый багет',
+    description: '2600 руб./м.п',
+    colorLabel: 'Золотой',
+    size: { widthCm: 25, heightCm: 25 },
+    price: 2600,
+    stock: 1,
+    image: {
+      src: catalogImage212,
+      alt: 'goodsFrame',
+    },
+    materialId: 4,
+    styleId: 'minimalism',
   },
 ];
+
+export const catalogItems: CatalogItem[] = catalogItemsSeed.map(
+  ({ materialId, styleId, ...item }) => {
+    const material = materialById.get(materialId);
+
+    if (!material) {
+      throw new Error(`Unknown material: ${materialId}`);
+    }
+
+    const style = styleId ? styleById.get(styleId) ?? null : null;
+
+    if (styleId && !style) {
+      throw new Error(`Unknown style: ${styleId}`);
+    }
+
+    return {
+      ...item,
+      source: 'default',
+      material: {
+        id: material.id,
+        title: material.title,
+        material: material.material,
+        description: material.description,
+        pricePerCm: material.pricePerCm,
+        swatchHex: material.swatchHex,
+        image: material.image,
+      },
+      style: style
+        ? {
+            id: style.id,
+            name: style.name,
+            coefficient: style.coefficient,
+          }
+        : null,
+    };
+  },
+);
 
 export const catalogItemById = new Map(
   catalogItems.map((catalogItem) => [catalogItem.id, catalogItem] as const),

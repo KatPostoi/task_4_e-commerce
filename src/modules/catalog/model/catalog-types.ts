@@ -5,15 +5,13 @@ import type {
 } from '../../../shared/types/domain';
 
 export type Material = {
-  id: EntityId;
-  slug: string;
+  id: number;
   title: string;
-  shortDescription: string;
+  material: string;
   description: string;
   pricePerCm: number;
   swatchHex: string;
   image: ImageAsset;
-  highlights: string[];
 };
 
 export type MaterialSnapshot = Pick<
@@ -21,9 +19,13 @@ export type MaterialSnapshot = Pick<
   'id' | 'title' | 'pricePerCm' | 'swatchHex'
 >;
 
+export type CatalogMaterial = Pick<
+  Material,
+  'id' | 'title' | 'material' | 'description' | 'pricePerCm' | 'swatchHex' | 'image'
+>;
+
 export type Style = {
   id: EntityId;
-  slug: string;
   name: string;
   coefficient: number;
   description: string;
@@ -42,6 +44,6 @@ export type CatalogItem = {
   price: number;
   stock: number;
   image: ImageAsset;
-  materialId: Material['id'];
-  styleId: Style['id'] | null;
+  material: CatalogMaterial;
+  style: StyleSnapshot | null;
 };

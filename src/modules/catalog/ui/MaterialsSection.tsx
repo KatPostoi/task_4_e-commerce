@@ -9,11 +9,13 @@ type MaterialsSectionProps = {
 };
 
 export const MaterialsSection = ({ items }: MaterialsSectionProps) => {
+  const sortedItems = [...items].sort((left, right) => left.id - right.id);
+
   return (
     <TopicSection className="materials-section">
       <TopicSectionTitle>Материалы</TopicSectionTitle>
       <div className="materials-section__cards-wrapper">
-        {items.map((item) => (
+        {sortedItems.map((item) => (
           <MaterialCard item={item} key={item.id} />
         ))}
       </div>

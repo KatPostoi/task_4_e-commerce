@@ -1,25 +1,20 @@
+import type {
+  MaterialOption,
+  StyleOption,
+} from '../lib/catalog-options';
 import { Dropdown } from '../../../shared/ui/Dropdown/Dropdown';
 import './catalog-filters.css';
 
-type FilterOption = {
-  id: string;
-  label: string;
-};
-
 type CatalogFiltersProps = {
-  favoritesOnly: boolean;
-  onFavoritesToggle: () => void;
-  materialOptions: FilterOption[];
-  selectedMaterial: FilterOption;
-  onMaterialSelect: (option: FilterOption) => void;
-  styleOptions: FilterOption[];
-  selectedStyle: FilterOption;
-  onStyleSelect: (option: FilterOption) => void;
+  materialOptions: MaterialOption[];
+  selectedMaterial: MaterialOption;
+  onMaterialSelect: (option: MaterialOption) => void;
+  styleOptions: StyleOption[];
+  selectedStyle: StyleOption;
+  onStyleSelect: (option: StyleOption) => void;
 };
 
 export const CatalogFilters = ({
-  favoritesOnly,
-  onFavoritesToggle,
   materialOptions,
   selectedMaterial,
   onMaterialSelect,
@@ -29,21 +24,6 @@ export const CatalogFilters = ({
 }: CatalogFiltersProps) => {
   return (
     <div className="catalog-filters">
-      <button
-        className={[
-          'catalog-filters__favorites-button',
-          'nav-menu__item',
-          'anonymous-pro-bold',
-          favoritesOnly ? 'nav-menu__item_active' : '',
-        ]
-          .filter(Boolean)
-          .join(' ')}
-        type="button"
-        onClick={onFavoritesToggle}
-      >
-        Избранное
-      </button>
-
       <Dropdown
         className="catalog-filters__dropdown"
         fullWidth={false}

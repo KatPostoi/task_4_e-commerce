@@ -27,7 +27,7 @@ export const MaterialCard = ({ item }: MaterialCardProps) => {
       <div className="button-position-wrapper">
         <LinkAsButton
           className="materials-card__cta"
-          href={`${routePaths.design}?materialId=${encodeURIComponent(item.id)}`}
+          href={`${routePaths.design}?materialId=${encodeURIComponent(item.id.toString())}`}
           variant="secondary"
         >
           Создать свой дизайн

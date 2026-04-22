@@ -1,9 +1,8 @@
+import type { ReactNode } from 'react';
 import { formatCurrency } from '../../../shared/lib/currency';
-import { ButtonBasket } from '../../../shared/ui/ButtonBasket/ButtonBasket';
-import { ButtonFavorites } from '../../../shared/ui/ButtonFavorites/ButtonFavorites';
 import './catalog-card.css';
 
-type CatalogCardItem = {
+export type CatalogCardItem = {
   id: string;
   title: string;
   price: number;
@@ -15,28 +14,12 @@ type CatalogCardItem = {
 
 type CatalogCardProps = {
   item: CatalogCardItem;
-  isFavorite: boolean;
-  isInBasket: boolean;
-  onToggleFavorite: () => void;
-  onToggleBasket: () => void;
-  showFavoriteButton?: boolean;
+  actionSlot: ReactNode;
 };
 
-export const CatalogCard = ({
-  item,
-  isFavorite,
-  isInBasket,
-  onToggleFavorite,
-  onToggleBasket,
-  showFavoriteButton = true,
-}: CatalogCardProps) => {
+export const CatalogCard = ({ item, actionSlot }: CatalogCardProps) => {
   return (
     <div className="catalog-wrapper_card">
-      {showFavoriteButton ? (
-        <ButtonFavorites active={isFavorite} onClick={onToggleFavorite} />
-      ) : (
-        <div />
-      )}
       <div className="catalog-wrapper_card_goods-image">
         <img alt={item.image.alt} src={item.image.src} />
       </div>
@@ -47,7 +30,7 @@ export const CatalogCard = ({
             {formatCurrency(item.price)}
           </h2>
         </div>
-        <ButtonBasket active={isInBasket} onClick={onToggleBasket} />
+        {actionSlot}
       </div>
     </div>
   );

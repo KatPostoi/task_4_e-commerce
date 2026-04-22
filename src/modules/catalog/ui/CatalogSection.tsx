@@ -2,100 +2,112 @@ import { useMemo, useState } from 'react';
 import { catalogItems } from '../data/catalog-items';
 import { materials } from '../data/materials';
 import { styles } from '../data/styles';
-import { useFavoriteIds } from '../hooks/useFavoriteIds';
-import { useCart } from '../../cart/hooks/useCart';
+import {
+  buildMaterialOptions,
+  buildStyleOptions,
+  type MaterialOption,
+  type StyleOption,
+} from '../lib/catalog-options';
+import { useCart } from '../../cart/model/use-cart';
 import { TopicSection } from '../../../shared/ui/TopicSection/TopicSection';
 import { TopicSectionTitle } from '../../../shared/ui/TopicSection/TopicSectionTitle';
 import { CatalogCard } from './CatalogCard';
 import { CatalogFilters } from './CatalogFilters';
+import { CatalogGrid } from './CatalogGrid';
+import { ButtonBasket } from '../../../shared/ui/ButtonBasket/ButtonBasket';
+import { filterCatalog } from '../lib/filter-catalog';
 import './catalog-section.css';
 
-type FilterOption = {
-  id: string;
-  label: string;
-};
-
-const allMaterialOption: FilterOption = {
-  id: '__all_materials',
+const ALL_MATERIAL_OPTION: MaterialOption = {
+  id: 0,
   label: 'Все материалы',
+  pricePerCm: 0,
 };
 
-const allStyleOption: FilterOption = {
+const ALL_STYLE_OPTION: StyleOption = {
   id: '__all_styles',
   label: 'Все стили',
+  coefficient: 0,
 };
 
 export const CatalogSection = () => {
-  const { isFavorite, toggle } = useFavoriteIds();
   const { isProductInCart, toggleCatalogItem } = useCart();
-  const [favoritesOnly, setFavoritesOnly] = useState(false);
-  const [selectedMaterial, setSelectedMaterial] =
-    useState<FilterOption>(allMaterialOption);
-  const [selectedStyle, setSelectedStyle] = useState<FilterOption>(allStyleOption);
+  const [materialFilterId, setMaterialFilterId] = useState<number | null>(null);
+  const [styleFilterId, setStyleFilterId] = useState<string | null>(null);
 
-  const materialOptions = useMemo<FilterOption[]>(() => {
-    return [allMaterialOption, ...materials.map((item) => ({
-      id: item.id,
-      label: item.title,
-    }))];
+  const materialOptions = useMemo<MaterialOption[]>(() => {
+    return [ALL_MATERIAL_OPTION, ...buildMaterialOptions(materials)];
   }, []);
 
-  const styleOptions = useMemo<FilterOption[]>(() => {
-    return [allStyleOption, ...styles.map((item) => ({
-      id: item.id,
-      label: item.name,
-    }))];
+  const styleOptions = useMemo<StyleOption[]>(() => {
+    return [ALL_STYLE_OPTION, ...buildStyleOptions(styles)];
   }, []);
+
+  const selectedMaterial = useMemo(
+    () =>
+      materialOptions.find((option) => option.id === materialFilterId) ??
+      ALL_MATERIAL_OPTION,
+    [materialFilterId, materialOptions],
+  );
+
+  const selectedStyle = useMemo(
+    () =>
+      styleOptions.find((option) => option.id === styleFilterId) ??
+      ALL_STYLE_OPTION,
+    [styleFilterId, styleOptions],
+  );
 
   const filteredItems = useMemo(() => {
-    return catalogItems.filter((item) => {
-      const matchesFavorites = favoritesOnly ? isFavorite(item.id) : true;
-      const matchesMaterial =
-        selectedMaterial.id === allMaterialOption.id
-          ? true
-          : item.materialId === selectedMaterial.id;
-      const matchesStyle =
-        selectedStyle.id === allStyleOption.id
-          ? true
-          : item.styleId === selectedStyle.id;
-
-      return matchesFavorites && matchesMaterial && matchesStyle;
+    return filterCatalog(catalogItems, {
+      materialId:
+        selectedMaterial.id === ALL_MATERIAL_OPTION.id ? null : selectedMaterial.id,
+      styleId: selectedStyle.id === ALL_STYLE_OPTION.id ? null : selectedStyle.id,
     });
-  }, [favoritesOnly, isFavorite, selectedMaterial.id, selectedStyle.id]);
+  }, [selectedMaterial.id, selectedStyle.id]);
+
+  const handleMaterialSelect = (option: MaterialOption) => {
+    setMaterialFilterId(option.id === ALL_MATERIAL_OPTION.id ? null : option.id);
+  };
+
+  const handleStyleSelect = (option: StyleOption) => {
+    setStyleFilterId(option.id === ALL_STYLE_OPTION.id ? null : option.id);
+  };
 
   return (
     <TopicSection className="catalog-section">
       <TopicSectionTitle>Каталог</TopicSectionTitle>
 
       <CatalogFilters
-        favoritesOnly={favoritesOnly}
         materialOptions={materialOptions}
-        onFavoritesToggle={() => setFavoritesOnly((currentValue) => !currentValue)}
-        onMaterialSelect={setSelectedMaterial}
-        onStyleSelect={setSelectedStyle}
+        onMaterialSelect={handleMaterialSelect}
+        onStyleSelect={handleStyleSelect}
         selectedMaterial={selectedMaterial}
         selectedStyle={selectedStyle}
         styleOptions={styleOptions}
       />
 
-      {filteredItems.length === 0 ? (
-        <p className="catalog-section__empty-message anonymous-pro-bold home-text-block__md__left">
-          Нет товаров, удовлетворяющих условиям фильтра.
-        </p>
-      ) : (
-        <div className="catalog-wrapper">
-          {filteredItems.map((item) => (
-            <CatalogCard
-              isFavorite={isFavorite(item.id)}
-              isInBasket={isProductInCart(item.id)}
-              item={item}
-              key={item.id}
-              onToggleBasket={() => toggleCatalogItem(item)}
-              onToggleFavorite={() => toggle(item.id)}
-            />
-          ))}
-        </div>
-      )}
+      <CatalogGrid
+        emptyMessage="Нет товаров, удовлетворяющих условиям фильтра."
+        isEmpty={filteredItems.length === 0}
+      >
+        {filteredItems.map((item) => (
+          <CatalogCard
+            actionSlot={
+              <ButtonBasket
+                active={isProductInCart(item.id)}
+                ariaLabel={
+                  isProductInCart(item.id)
+                    ? `Убрать ${item.title} из корзины`
+                    : `Добавить ${item.title} в корзину`
+                }
+                onClick={() => toggleCatalogItem(item)}
+              />
+            }
+            item={item}
+            key={item.id}
+          />
+        ))}
+      </CatalogGrid>
     </TopicSection>
   );
 };

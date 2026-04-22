@@ -2,32 +2,34 @@ import type { Style } from '../model/catalog-types';
 
 export const styles: Style[] = [
   {
-    id: 'minimal',
-    slug: 'minimal',
+    id: 'baroque',
+    name: 'Барокко',
+    coefficient: 1.8,
+    description: 'Декоративный стиль с наиболее выразительным профилем и акцентной подачей.',
+  },
+  {
+    id: 'minimalism',
     name: 'Минимализм',
     coefficient: 1,
-    description: 'Самый сдержанный вариант без дополнительной декоративности.',
+    description: 'Самый сдержанный и лаконичный вариант без лишней декоративности.',
   },
   {
-    id: 'classic',
-    slug: 'classic',
-    name: 'Классика',
-    coefficient: 1.18,
-    description: 'Немного больше объёма и тепла, подходит для более насыщенной подачи.',
+    id: 'rococo',
+    name: 'Рококо',
+    coefficient: 1.6,
+    description: 'Декоративный профиль с мягкой пластикой и более насыщенным силуэтом.',
   },
   {
-    id: 'gallery',
-    slug: 'gallery',
-    name: 'Галерейный',
-    coefficient: 1.32,
-    description: 'Выразительный профиль для плакатов и серийных развесок.',
+    id: 'classicism',
+    name: 'Классицизм',
+    coefficient: 1.4,
+    description: 'Сдержанный классический стиль с читаемой формой и ровным ритмом.',
   },
   {
-    id: 'vintage',
-    slug: 'vintage',
-    name: 'Винтаж',
-    coefficient: 1.45,
-    description: 'Самый характерный стиль с акцентом на декоративность и глубину.',
+    id: 'art-deco',
+    name: 'Ар-деко',
+    coefficient: 1.5,
+    description: 'Графичный декоративный стиль с контрастной и более современной подачей.',
   },
 ];
 

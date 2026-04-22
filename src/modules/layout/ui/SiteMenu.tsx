@@ -33,28 +33,31 @@ export const SiteMenu = () => {
   return (
     <div>
       <div className="menu-wrapper">
-        <nav className="nav-menu">
-          {items.map((item) => (
-            <Link
-              className={[
-                'nav-menu__item',
-                'anonymous-pro-bold',
-                isItemActive(location.pathname, item.href)
-                  ? 'nav-menu__item_active'
-                  : '',
-              ]
-                .filter(Boolean)
-                .join(' ')}
-              key={item.id}
-              to={item.href}
-            >
-              {item.label}
-            </Link>
-          ))}
+        <nav aria-label="Основная навигация" className="nav-menu">
+          {items.map((item) => {
+            const isActive = isItemActive(location.pathname, item.href);
+
+            return (
+              <Link
+                aria-current={isActive ? 'page' : undefined}
+                className={[
+                  'nav-menu__item',
+                  'anonymous-pro-bold',
+                  isActive ? 'nav-menu__item_active' : '',
+                ]
+                  .filter(Boolean)
+                  .join(' ')}
+                key={item.id}
+                to={item.href}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="nav-menu__logo-wrapper">
-          <img alt="Logo" className="nav-menu__logo" src={logoImg} />
+          <img alt="Логотип Baguette Basket" className="nav-menu__logo" src={logoImg} />
         </div>
 
         <LinkAsButton href={routePaths.design}>Создать свой дизайн</LinkAsButton>

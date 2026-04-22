@@ -7,6 +7,7 @@ type ButtonBasketProps = {
   onClick: () => void;
   disabled?: boolean;
   className?: string;
+  ariaLabel?: string;
 };
 
 export const ButtonBasket = ({
@@ -14,9 +15,11 @@ export const ButtonBasket = ({
   onClick,
   disabled = false,
   className,
+  ariaLabel = 'Переключить состояние товара в корзине',
 }: ButtonBasketProps) => {
   return (
     <button
+      aria-label={ariaLabel}
       aria-pressed={active}
       className={['icon-image-container', className ?? ''].filter(Boolean).join(' ')}
       disabled={disabled}
@@ -24,7 +27,11 @@ export const ButtonBasket = ({
       onClick={onClick}
     >
       <div className="icon-image">
-        <img alt="IconBasket" src={active ? basketActiveIcon : basketIcon} />
+        <img
+          alt=""
+          aria-hidden="true"
+          src={active ? basketActiveIcon : basketIcon}
+        />
       </div>
     </button>
   );

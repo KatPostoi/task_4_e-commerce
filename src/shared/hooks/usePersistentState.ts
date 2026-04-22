@@ -30,5 +30,31 @@ export const usePersistentState = <T,>(
     writeLocalStorageValue(key, value);
   }, [key, value]);
 
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return undefined;
+    }
+
+    const handleStorage = (event: StorageEvent) => {
+      if (event.key !== key) {
+        return;
+      }
+
+      const fallback = resolveInitialValue(initialValue);
+      const nextValue = readLocalStorageValue(key, {
+        fallback,
+        normalize,
+      });
+
+      setValue(nextValue);
+    };
+
+    window.addEventListener('storage', handleStorage);
+
+    return () => {
+      window.removeEventListener('storage', handleStorage);
+    };
+  }, [initialValue, key, normalize]);
+
   return [value, setValue] as const;
 };

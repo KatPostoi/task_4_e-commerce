@@ -14,22 +14,18 @@ export const deliveryServices: DeliveryService[] = [
     id: 'city-courier',
     code: 'courier-city',
     type: 'courier',
-    title: 'Курьер по Москве',
-    description: 'Базовая городская доставка для готовых рам и небольших заказов.',
+    title: 'Доставка',
+    description: 'Доставка для готовых рам и небольших заказов.',
     price: 600,
-    etaLabel: '1-2 рабочих дня',
+    etaLabel: '3-4 рабочих дня',
   },
   {
-    id: 'express-courier',
-    code: 'courier-express',
-    type: 'express',
-    title: 'Экспресс-доставка',
-    description: 'Ускоренный вариант, если заказ нужен к ближайшей дате или событию.',
-    price: 950,
-    etaLabel: 'В день готовности или на следующий день',
+    id: 'promo-code',
+    code: 'promo',
+    type: 'promo',
+    title: 'Промокод',
+    description: 'Введите промокод и получите скидку на ваш заказ.',
+    price: 0,
+    etaLabel: '',
   },
 ];
-
-export const deliveryServiceById = new Map(
-  deliveryServices.map((service) => [service.id, service] as const),
-);

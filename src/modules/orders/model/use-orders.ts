@@ -1,13 +1,15 @@
 import { storageKeys } from '../../../shared/config/storage-keys';
 import { usePersistentState } from '../../../shared/hooks/usePersistentState';
-import { createLocalId, createTimestamp } from '../../../shared/lib/ids';
 import {
   createEmptyOrdersState,
   normalizeOrdersState,
-  type Order,
   type OrderPayload,
   type OrdersState,
-} from '../model/order-types';
+} from './order-types';
+import {
+  createOrderRecord,
+  insertOrder,
+} from '../storage/orders-storage';
 
 export const useOrders = () => {
   const [ordersState, setOrdersState] = usePersistentState<OrdersState>(
@@ -18,21 +20,10 @@ export const useOrders = () => {
     },
   );
 
-  const createOrder = (payload: OrderPayload): Order => {
-    const timestamp = createTimestamp();
-    const order: Order = {
-      id: createLocalId('order'),
-      status: 'created',
-      payload,
-      createdAt: timestamp,
-      updatedAt: timestamp,
-    };
+  const createOrder = (payload: OrderPayload) => {
+    const order = createOrderRecord(payload);
 
-    setOrdersState((currentState) => ({
-      ...currentState,
-      items: [order, ...currentState.items],
-      updatedAt: timestamp,
-    }));
+    setOrdersState((currentState) => insertOrder(currentState, order));
 
     return order;
   };

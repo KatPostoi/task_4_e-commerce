@@ -1,28 +1,25 @@
 import type { ChangeEvent } from 'react';
-import type { CartViewItem } from '../hooks/useCart';
+import type { CartViewItem } from '../model/cart-types';
 import { formatCurrency } from '../../../shared/lib/currency';
-import { ButtonFavorites } from '../../../shared/ui/ButtonFavorites/ButtonFavorites';
 
 type BasketItemCardProps = {
   item: CartViewItem;
   isSelected: boolean;
-  isFavorite: boolean;
   onSelectChange: (itemId: string, checked: boolean) => void;
-  onToggleFavorite: (productId: string) => void;
   onIncrement: (itemId: string) => void;
   onDecrement: (itemId: string) => void;
   onRemove: (itemId: string) => void;
+  disableActions?: boolean;
 };
 
 export const BasketItemCard = ({
   item,
   isSelected,
-  isFavorite,
   onSelectChange,
-  onToggleFavorite,
   onIncrement,
   onDecrement,
   onRemove,
+  disableActions = false,
 }: BasketItemCardProps) => {
   const handleSelectChange = (event: ChangeEvent<HTMLInputElement>) => {
     onSelectChange(item.id, event.target.checked);
@@ -40,15 +37,6 @@ export const BasketItemCard = ({
 
       <div className="goods-in-basket_wrapper_content">
         <div className="goods-in-basket_wrapper_content_description">
-          {item.source === 'default' ? (
-            <ButtonFavorites
-              active={isFavorite}
-              onClick={() => onToggleFavorite(item.productId)}
-            />
-          ) : (
-            <div />
-          )}
-
           <div className="goods-in-basket_wrapper_content_description_text">
             <h2 className="anonymous-pro-bold home-text-block__sm">
               {item.frame.title}
@@ -71,7 +59,9 @@ export const BasketItemCard = ({
           </div>
 
           <button
+            aria-label={`Удалить товар ${item.frame.title} из корзины`}
             className="basket-item__remove-button anonymous-pro-bold home-text-block__sm_orange"
+            disabled={disableActions}
             type="button"
             onClick={() => onRemove(item.id)}
           >
@@ -83,6 +73,7 @@ export const BasketItemCard = ({
               aria-label={`Выбрать товар ${item.frame.title} для заказа`}
               checked={isSelected}
               className="square-agreement"
+              disabled={disableActions}
               type="checkbox"
               onChange={handleSelectChange}
             />
@@ -92,9 +83,9 @@ export const BasketItemCard = ({
         <div className="goods-in-basket_wrapper_content_counting">
           <div className="goods-in-basket_wrapper_content_counting_box">
             <button
-              aria-label="Уменьшить количество"
+              aria-label={`Уменьшить количество товара ${item.frame.title}`}
               className="basket-item__quantity-button"
-              disabled={item.quantity <= 1}
+              disabled={item.quantity <= 1 || disableActions}
               type="button"
               onClick={() => onDecrement(item.id)}
             >
@@ -104,8 +95,9 @@ export const BasketItemCard = ({
               {item.quantity}
             </h2>
             <button
-              aria-label="Увеличить количество"
+              aria-label={`Увеличить количество товара ${item.frame.title}`}
               className="basket-item__quantity-button"
+              disabled={disableActions}
               type="button"
               onClick={() => onIncrement(item.id)}
             >

@@ -1,3 +1,6 @@
+import { routePaths } from '../../../shared/config/routes';
+import { LinkAsButton } from '../../../shared/ui/LinkAsButton/LinkAsButton';
+
 export const BasketEmptyState = () => {
   return (
     <div className="basket-empty-state">
@@ -8,6 +11,9 @@ export const BasketEmptyState = () => {
         Добавьте понравившиеся рамы в корзину, чтобы продолжить оформление
         заказа.
       </p>
+      <div className="basket-empty-state__action">
+        <LinkAsButton href={routePaths.catalog}>Перейти в каталог</LinkAsButton>
+      </div>
     </div>
   );
 };

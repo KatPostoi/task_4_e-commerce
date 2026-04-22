@@ -1,6 +1,6 @@
 import type { EntityId } from '../../../shared/types/domain';
 
-export type DeliveryServiceType = 'pickup' | 'courier' | 'express';
+export type DeliveryServiceType = 'pickup' | 'courier' | 'promo';
 
 export type DeliveryService = {
   id: EntityId;

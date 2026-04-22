@@ -18,6 +18,11 @@
   transition: background-color 300ms ease-out;
 }
 
+.link-as-button:focus-visible {
+  outline: 3px solid #e97721;
+  outline-offset: 4px;
+}
+
 .link-as-button_primary {
   background-color: black;
   color: white;

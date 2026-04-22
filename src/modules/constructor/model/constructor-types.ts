@@ -5,6 +5,7 @@ import type {
   StyleSnapshot,
 } from '../../catalog/model/catalog-types';
 import type {
+  DimensionsCm,
   EntityId,
   ImageAsset,
   PersistedCollection,
@@ -21,12 +22,22 @@ import {
   normalizePersistedCollection,
 } from '../../../shared/lib/guards';
 
-export type ConstructorDraft = {
-  materialId: Material['id'];
-  styleId: Style['id'];
-  widthCm: number;
-  heightCm: number;
+export type ConstructorFormValues = {
+  widthInput: string;
+  heightInput: string;
+  materialId: Material['id'] | null;
+  styleId: Style['id'] | null;
   note: string;
+};
+
+export type ConstructorNormalizedDimensions = DimensionsCm;
+
+export type ConstructorDraft = {
+  material: Material;
+  style: Style;
+  dimensions: ConstructorNormalizedDimensions;
+  note: string;
+  price: number;
 };
 
 export type CustomFrame = TimestampedRecord & {
@@ -35,10 +46,7 @@ export type CustomFrame = TimestampedRecord & {
   source: 'custom';
   title: string;
   description: string;
-  size: {
-    widthCm: number;
-    heightCm: number;
-  };
+  size: DimensionsCm;
   price: number;
   image: ImageAsset;
   material: MaterialSnapshot;
@@ -53,12 +61,18 @@ const normalizeMaterialSnapshot = (value: unknown): MaterialSnapshot | null => {
     return null;
   }
 
-  const id = asString(value.id);
+  const rawId =
+    typeof value.id === 'number'
+      ? value.id
+      : typeof value.id === 'string'
+        ? Number(value.id)
+        : NaN;
+  const id = Number.isInteger(rawId) && rawId > 0 ? rawId : NaN;
   const title = asString(value.title);
   const pricePerCm = asNumber(value.pricePerCm, NaN);
   const swatchHex = asString(value.swatchHex);
 
-  if (!id || !title || !Number.isFinite(pricePerCm) || !swatchHex) {
+  if (!Number.isFinite(id) || !title || !Number.isFinite(pricePerCm) || !swatchHex) {
     return null;
   }
 

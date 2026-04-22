@@ -49,6 +49,11 @@
   transition: all 300ms ease-out;
 }
 
+.nav-menu__item:focus-visible {
+  outline: 3px solid #e97721;
+  outline-offset: 4px;
+}
+
 .nav-menu__logo-wrapper {
   display: block;
   width: 100%;

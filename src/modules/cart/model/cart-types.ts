@@ -44,6 +44,11 @@ export type CartItem = TimestampedRecord & {
   snapshot: ProductSnapshot;
 };
 
+export type CartViewItem = CartItem & {
+  frame: ProductSnapshot;
+  subtotal: number;
+};
+
 export type CartState = PersistedCollection<CartItem>;
 
 export type DeliverySelection = {
@@ -65,12 +70,18 @@ const normalizeMaterialSnapshot = (value: unknown): MaterialSnapshot | null => {
     return null;
   }
 
-  const id = asString(value.id);
+  const rawId =
+    typeof value.id === 'number'
+      ? value.id
+      : typeof value.id === 'string'
+        ? Number(value.id)
+        : NaN;
+  const id = Number.isInteger(rawId) && rawId > 0 ? rawId : NaN;
   const title = asString(value.title);
   const pricePerCm = asNumber(value.pricePerCm, NaN);
   const swatchHex = asString(value.swatchHex);
 
-  if (!id || !title || !Number.isFinite(pricePerCm) || !swatchHex) {
+  if (!Number.isFinite(id) || !title || !Number.isFinite(pricePerCm) || !swatchHex) {
     return null;
   }
 

@@ -32,9 +32,26 @@
   transition: all 300ms ease-out;
 }
 
+.change-selection_button:focus-visible {
+  outline: 3px solid #e97721;
+  outline-offset: 4px;
+}
+
 .change-selection_button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.basket-message {
+  margin: 0;
+}
+
+.basket-message_success {
+  color: #5b5b5b;
+}
+
+.basket-message_error {
+  color: #5b5b5b;
 }
 
 .goods-in-basket_wrapper {
@@ -72,7 +89,7 @@
 
 .goods-in-basket_wrapper_content_description {
   display: grid;
-  grid-template-columns: auto 1fr auto auto;
+  grid-template-columns: 1fr auto auto;
   gap: 40px;
   align-items: start;
 }
@@ -166,6 +183,10 @@
   padding-left: 40px;
 }
 
+.delivery-wrapper_price_data_borderless {
+  border-bottom: none;
+}
+
 .delivery-wrapper_price_data:focus-within {
   border-bottom-color: #e97721;
 }
@@ -232,6 +253,12 @@
   cursor: not-allowed;
 }
 
+.basket-item__quantity-button:focus-visible,
+.basket-item__remove-button:focus-visible {
+  outline: 3px solid #e97721;
+  outline-offset: 4px;
+}
+
 .basket-item__remove-button {
   border: none;
   background: transparent;
@@ -240,6 +267,11 @@
   cursor: pointer;
   padding: 0;
   justify-self: end;
+}
+
+.basket-item__remove-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .basket-item__select-control {
@@ -264,4 +296,62 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+.basket-empty-state__action {
+  display: grid;
+  justify-items: center;
+}
+
+@media (max-width: 1023px) {
+  .basket-wrapper {
+    padding: 0 24px;
+    gap: 32px;
+  }
+
+  .goods-in-basket_wrapper {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .goods-in-basket_wrapper_image-container {
+    justify-self: center;
+  }
+
+  .goods-in-basket_wrapper_content_description,
+  .goods-in-basket_wrapper_content_counting,
+  .delivery-wrapper_agree,
+  .delivery-wrapper_price,
+  .total-wrapper {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .basket-item__remove-button,
+  .basket-item__select-control,
+  .delivery-wrapper_agree > :last-child,
+  .total-wrapper > :last-child {
+    justify-self: start;
+  }
+
+  .delivery-wrapper_price_data {
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .basket-wrapper {
+    padding: 0 20px;
+  }
+
+  .change-selection {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .goods-in-basket_wrapper_content_counting_box {
+    width: 100%;
+    gap: 24px;
+    padding: 0 24px;
+  }
 }

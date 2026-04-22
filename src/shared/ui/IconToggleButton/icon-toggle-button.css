@@ -13,6 +13,11 @@
   cursor: not-allowed;
 }
 
+.icon-image-container:focus-visible {
+  outline: 3px solid #e97721;
+  outline-offset: 4px;
+}
+
 .icon-image {
   display: flex;
   align-items: flex-end;
