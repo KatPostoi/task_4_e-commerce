@@ -1,87 +1,41 @@
-.about-page {
-  display: grid;
-  gap: var(--space-6);
+.home-text-block {
+  padding: 0px 40px;
 }
 
-.about-page__hero-card {
-  display: grid;
-  gap: var(--space-3);
-}
-
-.about-page__hero-image {
+.our_principe_wrapper {
+  background-color: #e97721;
   width: 100%;
-  border-radius: calc(var(--radius-xl) - 0.25rem);
-  box-shadow: 0 18px 40px rgba(74, 48, 28, 0.14);
+  border-radius: 65px;
+  display: flex;
+  gap: 40px;
+  padding: 40px;
 }
 
-.about-page__hero-note {
-  color: var(--color-ink-muted);
-  font-size: var(--text-sm);
+.our_principe_card_wrapper {
+  margin-top: 142px;
+  gap: 40px;
 }
 
-.about-page__story-section .section__body,
-.about-page__principles-section .section__body {
+.our_principe_card {
+  border-bottom: 3px solid #000;
+  padding: 40px 0px;
   display: grid;
-  gap: var(--space-5);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, auto));
+  row-gap: 20px;
+  column-gap: 40px;
 }
 
-.about-page__stats {
-  display: grid;
-  gap: var(--space-3);
+.our_principe_card:last-child {
+  border: none;
+  padding: 40px 0px 0px 0px;
+  row-gap: 0px;
 }
 
-.about-page__stat-card,
-.about-page__story-card {
-  display: grid;
-  gap: var(--space-2);
-  padding: var(--space-4);
-  border: var(--border-width) solid rgba(118, 90, 64, 0.14);
-  border-radius: var(--radius-lg);
-  background-color: rgba(255, 255, 255, 0.45);
-}
-
-.about-page__stat-value {
-  color: var(--color-accent-strong);
-  font-family: var(--font-family-mono);
-  font-size: clamp(1.8rem, 4vw, 2.8rem);
-  line-height: 1;
-}
-
-.about-page__stat-label,
-.about-page__story-text {
-  color: var(--color-ink-muted);
-}
-
-.about-page__story-grid,
-.about-page__principles-grid {
-  display: grid;
-  gap: var(--space-4);
-}
-
-.about-page__story-title,
-.about-page__principle-title {
-  color: var(--color-ink-strong);
-  font-size: 1.3rem;
-  line-height: 1.08;
-}
-
-.about-page__principle-card {
-  display: grid;
-  gap: var(--space-3);
-  padding: var(--space-4);
-  border: var(--border-width) solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius-lg);
-  background: rgba(255, 255, 255, 0.04);
-}
-
-.about-page__principle-text {
-  color: rgba(255, 247, 237, 0.78);
-}
-
-@media (min-width: 720px) {
-  .about-page__stats,
-  .about-page__story-grid,
-  .about-page__principles-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
+.our_principe_card img {
+  border-radius: 65px;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
 }

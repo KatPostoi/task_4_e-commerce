@@ -1,0 +1,20 @@
+.icon-image-container {
+  display: flex;
+  align-self: end;
+  border: none;
+  background: none;
+  padding: 0;
+  outline: none;
+  cursor: pointer;
+}
+
+.icon-image-container:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.icon-image {
+  display: flex;
+  align-items: flex-end;
+  justify-content: right;
+}

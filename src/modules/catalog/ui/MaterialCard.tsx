@@ -1,6 +1,6 @@
 import type { Material } from '../model/catalog-types';
 import { routePaths } from '../../../shared/config/routes';
-import { Button } from '../../../shared/ui/Button/Button';
+import { LinkAsButton } from '../../../shared/ui/LinkAsButton/LinkAsButton';
 import './material-card.css';
 
 type MaterialCardProps = {
@@ -9,45 +9,30 @@ type MaterialCardProps = {
 
 export const MaterialCard = ({ item }: MaterialCardProps) => {
   return (
-    <article className="material-card">
-      <div className="material-card__media">
+    <div className="materials-card">
+      <div className="anonymous-pro-bold home-text-block__md__left">
+        {item.title}
+      </div>
+
+      <div className="materials-card__content">
+        <div className="anonymous-pro-bold home-text-block__sm_white">
+          {item.description}
+        </div>
         <img
           alt={item.image.alt}
-          className="material-card__image"
+          className="materials-card__image"
           src={item.image.src}
         />
       </div>
-
-      <div className="material-card__body">
-        <div className="material-card__meta">
-          <span
-            aria-hidden="true"
-            className="material-card__swatch"
-            style={{ backgroundColor: item.swatchHex }}
-          />
-          <span className="material-card__price">{item.pricePerCm} ₽ / см</span>
-        </div>
-
-        <div className="material-card__copy">
-          <h3 className="material-card__title">{item.title}</h3>
-          <p className="material-card__lead">{item.shortDescription}</p>
-          <p className="material-card__description">{item.description}</p>
-        </div>
-
-        <ul className="material-card__highlights" role="list">
-          {item.highlights.map((highlight) => (
-            <li key={highlight}>{highlight}</li>
-          ))}
-        </ul>
-
-        <Button
-          fullWidth
-          to={`${routePaths.design}?materialId=${encodeURIComponent(item.id)}`}
+      <div className="button-position-wrapper">
+        <LinkAsButton
+          className="materials-card__cta"
+          href={`${routePaths.design}?materialId=${encodeURIComponent(item.id)}`}
           variant="secondary"
         >
           Создать свой дизайн
-        </Button>
+        </LinkAsButton>
       </div>
-    </article>
+    </div>
   );
 };

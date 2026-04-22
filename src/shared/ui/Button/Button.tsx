@@ -1,143 +1,52 @@
-import type {
-  AnchorHTMLAttributes,
-  ButtonHTMLAttributes,
-  ReactNode,
-} from 'react';
-import { Link, type LinkProps } from 'react-router-dom';
+import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import './button.css';
 
-type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'inverse';
+type ButtonVariant = 'primary' | 'secondary' | 'ghost';
 type ButtonSize = 'sm' | 'md' | 'lg';
 
-type CommonButtonProps = {
+type ButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children'> & {
   children: ReactNode;
   className?: string;
+  loading?: boolean;
   fullWidth?: boolean;
   size?: ButtonSize;
   variant?: ButtonVariant;
 };
 
-type NativeButtonProps = CommonButtonProps &
-  Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'> & {
-    href?: never;
-    to?: never;
-  };
-
-type RouterButtonProps = CommonButtonProps &
-  Omit<LinkProps, 'className' | 'to'> & {
-    href?: never;
-    to: LinkProps['to'];
-  };
-
-type AnchorButtonProps = CommonButtonProps &
-  Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'className' | 'href'> & {
-    href: string;
-    to?: never;
-  };
-
-export type ButtonProps =
-  | NativeButtonProps
-  | RouterButtonProps
-  | AnchorButtonProps;
-
-const isRouterButton = (props: ButtonProps): props is RouterButtonProps => {
-  return 'to' in props;
-};
-
-const isAnchorButton = (props: ButtonProps): props is AnchorButtonProps => {
-  return 'href' in props;
-};
-
-const getButtonClassName = ({
+export const Button = ({
+  children,
   className,
-  fullWidth,
-  size = 'md',
   variant = 'primary',
-}: Pick<ButtonProps, 'className' | 'fullWidth' | 'size' | 'variant'>) => {
-  return [
-    'button',
-    `button--${variant}`,
-    `button--${size}`,
-    fullWidth ? 'button--full-width' : '',
-    className ?? '',
-  ]
-    .filter(Boolean)
-    .join(' ');
-};
-
-export const Button = (props: ButtonProps) => {
-  const className = getButtonClassName(props);
-
-  if (isRouterButton(props)) {
-    const {
-      children,
-      className: ignoredClassName,
-      fullWidth: ignoredFullWidth,
-      size: ignoredSize,
-      variant: ignoredVariant,
-      ...linkProps
-    } = props;
-
-    void ignoredClassName;
-    void ignoredFullWidth;
-    void ignoredSize;
-    void ignoredVariant;
-
-    return (
-      <Link className={className} {...linkProps}>
-        {children}
-      </Link>
-    );
-  }
-
-  if (isAnchorButton(props)) {
-    const {
-      children,
-      className: ignoredClassName,
-      fullWidth: ignoredFullWidth,
-      size: ignoredSize,
-      variant: ignoredVariant,
-      rel,
-      target,
-      ...anchorProps
-    } = props;
-    const isExternal = target === '_blank';
-
-    void ignoredClassName;
-    void ignoredFullWidth;
-    void ignoredSize;
-    void ignoredVariant;
-
-    return (
-      <a
-        className={className}
-        rel={rel ?? (isExternal ? 'noreferrer noopener' : undefined)}
-        target={target}
-        {...anchorProps}
-      >
-        {children}
-      </a>
-    );
-  }
-
-  const {
-    children,
-    className: ignoredClassName,
-    fullWidth: ignoredFullWidth,
-    size: ignoredSize,
-    variant: ignoredVariant,
-    type = 'button',
-    ...buttonProps
-  } = props;
-
-  void ignoredClassName;
-  void ignoredFullWidth;
-  void ignoredSize;
-  void ignoredVariant;
-
+  size = 'md',
+  fullWidth = false,
+  loading = false,
+  disabled,
+  type = 'button',
+  ...restProps
+}: ButtonProps) => {
   return (
-    <button className={className} type={type} {...buttonProps}>
-      {children}
+    <button
+      {...restProps}
+      aria-busy={loading || undefined}
+      className={[
+        'ui-button',
+        `ui-button_variant_${variant}`,
+        `ui-button_size_${size}`,
+        fullWidth ? 'ui-button_full-width' : '',
+        loading ? 'ui-button_loading' : '',
+        className ?? '',
+      ]
+        .filter(Boolean)
+        .join(' ')}
+      disabled={disabled || loading}
+      type={type}
+    >
+      <span className="ui-button__label">{children}</span>
+      {loading ? (
+        <span aria-hidden="true" className="ui-button__icon">
+          <span className="ui-button__spinner" />
+        </span>
+      ) : null}
     </button>
   );
 };

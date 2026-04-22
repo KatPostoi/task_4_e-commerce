@@ -1,53 +1,64 @@
-import { NavLink, Link } from 'react-router-dom';
-import { publicRouteItems, routePaths } from '../../../shared/config/routes';
-import { Button } from '../../../shared/ui/Button/Button';
+import { Link, useLocation } from 'react-router-dom';
+import logoImg from '../../../shared/assets/images/logo.png';
+import { routePaths } from '../../../shared/config/routes';
+import { LinkAsButton } from '../../../shared/ui/LinkAsButton/LinkAsButton';
+import './menu.css';
 
-const getNavLinkClassName = (isActive: boolean) => {
-  return ['site-menu__nav-link', isActive ? 'site-menu__nav-link--active' : '']
-    .filter(Boolean)
-    .join(' ');
+type NavItem = {
+  id: string;
+  label: string;
+  href: string;
+};
+
+const items: NavItem[] = [
+  { id: 'home', label: 'О нас', href: routePaths.about },
+  { id: 'catalog', label: 'Каталог', href: routePaths.catalog },
+  { id: 'process', label: 'Процесс изготовления', href: routePaths.process },
+  { id: 'contacts', label: 'Контакты', href: routePaths.contacts },
+  { id: 'basket', label: 'Корзина', href: routePaths.basket },
+];
+
+const isItemActive = (pathname: string, href: string) => {
+  const normalizedPath = pathname.replace(/\/+$/, '') || '/';
+  if (href === '/') {
+    return normalizedPath === '/';
+  }
+
+  return normalizedPath === href || normalizedPath.startsWith(`${href}/`);
 };
 
 export const SiteMenu = () => {
-  return (
-    <header className="site-menu">
-      <div className="site-menu__surface">
-        <Link className="site-menu__brand" to={routePaths.about}>
-          <img
-            alt="Baguette Basket"
-            className="site-menu__brand-mark"
-            height="48"
-            src="/favicon.svg"
-            width="48"
-          />
-          <div className="site-menu__brand-copy">
-            <span className="site-menu__brand-title">Baguette Basket</span>
-            <span className="site-menu__brand-subtitle">
-              Мастерская рам и кастомного багета
-            </span>
-          </div>
-        </Link>
+  const location = useLocation();
 
-        <nav aria-label="Основные страницы" className="site-menu__nav">
-          {publicRouteItems.map((route) => (
-            <NavLink
-              className={({ isActive }) => getNavLinkClassName(isActive)}
-              end={route.path === routePaths.about}
-              key={route.key}
-              to={route.path}
+  return (
+    <div>
+      <div className="menu-wrapper">
+        <nav className="nav-menu">
+          {items.map((item) => (
+            <Link
+              className={[
+                'nav-menu__item',
+                'anonymous-pro-bold',
+                isItemActive(location.pathname, item.href)
+                  ? 'nav-menu__item_active'
+                  : '',
+              ]
+                .filter(Boolean)
+                .join(' ')}
+              key={item.id}
+              to={item.href}
             >
-              {route.label}
-            </NavLink>
+              {item.label}
+            </Link>
           ))}
         </nav>
 
-        <div className="site-menu__actions">
-          <p className="site-menu__status">Public MVP</p>
-          <Button size="sm" to={routePaths.design}>
-            Создать свой дизайн
-          </Button>
+        <div className="nav-menu__logo-wrapper">
+          <img alt="Logo" className="nav-menu__logo" src={logoImg} />
         </div>
+
+        <LinkAsButton href={routePaths.design}>Создать свой дизайн</LinkAsButton>
       </div>
-    </header>
+    </div>
   );
 };

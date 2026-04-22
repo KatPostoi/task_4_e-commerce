@@ -1,5 +1,8 @@
 import type { Material } from '../model/catalog-types';
-import { createMockImage } from '../../../shared/lib/mock-image';
+import frameWoodImg from '../../../shared/assets/images/frame_wood.png';
+import frameMdfImg from '../../../shared/assets/images/frame_mdf.png';
+import framePlasticImg from '../../../shared/assets/images/frame_plastic.png';
+import frameAluminumImg from '../../../shared/assets/images/frame_aluminum.png';
 
 export const materials: Material[] = [
   {
@@ -11,43 +14,40 @@ export const materials: Material[] = [
       'Натуральный дуб даёт мягкий, узнаваемый древесный тон и хорошо подходит для графики, постеров и небольших фотографий.',
     pricePerCm: 18,
     swatchHex: '#c89f6a',
-    image: createMockImage('Натуральный дуб', {
-      background: '#f7ecd9',
-      accent: '#d5b07a',
-      foreground: '#7c5632',
-    }),
+    image: {
+      src: frameWoodImg,
+      alt: 'Натуральный дуб',
+    },
     highlights: ['Натуральная текстура', 'Самый универсальный тон', 'Подходит для светлых интерьеров'],
   },
   {
     id: 'walnut-smoked',
     slug: 'walnut-smoked',
-    title: 'Копчёный орех',
-    shortDescription: 'Глубокий тёмный материал с музейным характером.',
+    title: 'МДФ',
+    shortDescription: 'Плотный стабильный профиль для более классической подачи.',
     description:
-      'Копчёный орех даёт более плотную рамку и хорошо держит композицию вокруг контрастных отпечатков и классических постеров.',
+      'МДФ подходит для более плотных рам и даёт понятную, устойчивую основу для интерьерных и галерейных решений.',
     pricePerCm: 22,
     swatchHex: '#6f4b33',
-    image: createMockImage('Копчёный орех', {
-      background: '#efe0d4',
-      accent: '#9a6b4d',
-      foreground: '#4d2e1d',
-    }),
+    image: {
+      src: frameMdfImg,
+      alt: 'МДФ',
+    },
     highlights: ['Более выразительный контур', 'Подходит для тёмных акцентов', 'Хорош для крупных форматов'],
   },
   {
     id: 'ash-ivory',
     slug: 'ash-ivory',
-    title: 'Светлый ясень',
+    title: 'Пластик',
     shortDescription: 'Лёгкий нейтральный материал для современной подачи.',
     description:
-      'Светлый ясень работает там, где нужно сохранить воздух и не перегружать стену массивным профилем.',
+      'Пластиковый профиль хорошо работает там, где нужно сохранить воздух и не перегружать стену массивным багетом.',
     pricePerCm: 17,
     swatchHex: '#d9c5a1',
-    image: createMockImage('Светлый ясень', {
-      background: '#faf3e8',
-      accent: '#ead7b9',
-      foreground: '#8b6d48',
-    }),
+    image: {
+      src: framePlasticImg,
+      alt: 'Пластик',
+    },
     highlights: ['Мягкий нейтральный цвет', 'Подходит для минималистичных решений', 'Хорошо сочетается с белыми паспарту'],
   },
   {
@@ -59,11 +59,10 @@ export const materials: Material[] = [
       'Чёрный алюминий подходит для постеров, фотографий и типографики, где важен резкий аккуратный силуэт.',
     pricePerCm: 15,
     swatchHex: '#2d2f35',
-    image: createMockImage('Чёрный алюминий', {
-      background: '#efece8',
-      accent: '#7b7d84',
-      foreground: '#23252b',
-    }),
+    image: {
+      src: frameAluminumImg,
+      alt: 'Чёрный алюминий',
+    },
     highlights: ['Чистый графичный контур', 'Самый лаконичный профиль', 'Сильный контраст на светлых стенах'],
   },
 ];
