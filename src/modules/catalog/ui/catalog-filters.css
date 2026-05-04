@@ -1,0 +1,12 @@
+.catalog-filters {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 40px;
+  margin-bottom: 40px;
+  align-items: center;
+}
+
+.catalog-filters__dropdown {
+  min-width: 220px;
+  flex-shrink: 0;
+}

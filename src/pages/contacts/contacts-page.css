@@ -1,0 +1,30 @@
+.contacts-content {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.contacts-content__column {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.contacts-content__socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.contacts-content__link {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (min-width: 820px) {
+  .contacts-content {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .contacts-content__column_wide {
+    grid-column: 1 / -1;
+  }
+}
